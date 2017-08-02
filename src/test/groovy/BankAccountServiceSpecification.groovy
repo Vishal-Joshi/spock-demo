@@ -76,8 +76,8 @@ class BankAccountServiceSpecification extends Specification {
 
     def "Should throw exception when trying to create duplicate bank accounts"() {
         when:
-        service.createBankAccount(UUID);
-        service.createBankAccount(UUID);
+        service.createBankAccount(UUID)
+        service.createBankAccount(UUID)
 
         then:
         thrown(IllegalArgumentException)
