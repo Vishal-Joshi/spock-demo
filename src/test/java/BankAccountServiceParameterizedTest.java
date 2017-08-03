@@ -33,12 +33,14 @@ public class BankAccountServiceParameterizedTest {
     @Parameterized.Parameter(1)
     public String accountId;
 
+    @Parameterized.Parameter(2)
+    public IdGenerator.Type idType;
+
     @Parameterized.Parameters(name = "({0})")
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
-                {"default case", DEFAULT_ID},
-                {"UUID", UUID},
-                {"NUMERIC_ID", NUMERIC_ID}
+                {"UUID", UUID, IdGenerator.Type.UUID},
+                {"NUMERIC_ID", NUMERIC_ID, IdGenerator.Type.NUMERIC}
         });
     }
 
@@ -50,10 +52,12 @@ public class BankAccountServiceParameterizedTest {
     }
 
     @Test
-    public void shouldGenerateBankAccountWithDefaultIdSuccessfully() {
-        when(generatorMock.generate()).thenReturn(accountId);
+    public void shouldGenerateBankAccountWithUuidSuccessfully() {
+        when(generatorMock.generate(idType)).thenReturn(accountId);
 
-        service.generateBankAccount();
+        service.generateBankAccount(idType);
+
+        verify(generatorMock, times(1)).generate(idType);
 
         BankAccount bankAccount = service.getBankAccount(accountId);
 

@@ -16,7 +16,6 @@ import static org.mockito.Mockito.*;
 public class BankAccountServiceTest {
     private static final String UUID = "444b378f-bf1c-4878-86e7-ca27c77a7414";
     private static final String NUMERIC_ID = "87";
-    private static final String DEFAULT_ID = UUID;
 
     @Mock
     IdGenerator generatorMock;
@@ -37,20 +36,6 @@ public class BankAccountServiceTest {
         } catch (IllegalArgumentException e) {
             fail("IllegalArgumentException was thrown");
         }
-    }
-
-    @Test
-    public void shouldGenerateBankAccountWithDefaultIdSuccessfully() {
-        when(generatorMock.generate()).thenReturn(DEFAULT_ID);
-
-        service.generateBankAccount();
-
-        verify(generatorMock, times(1)).generate();
-
-        BankAccount bankAccount = service.getBankAccount(DEFAULT_ID);
-
-        assertThat(bankAccount, instanceOf(BankAccount.class));
-        assertThat(bankAccount.getId(), equalTo(DEFAULT_ID));
     }
 
     @Test

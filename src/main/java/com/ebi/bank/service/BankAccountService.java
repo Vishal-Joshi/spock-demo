@@ -26,15 +26,6 @@ public class BankAccountService {
     }
 
     /**
-     * Generates a bank account with default id type
-     */
-    public void generateBankAccount() {
-        String id = generator.generate();
-
-        bankAccounts.put(id, new BankAccount(id));
-    }
-
-    /**
      * Generates a bank account with specified id type
      * @param type the id type of the generated bank account
      */

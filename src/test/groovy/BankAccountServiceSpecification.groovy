@@ -6,7 +6,6 @@ import spock.lang.Specification
 class BankAccountServiceSpecification extends Specification {
     final UUID = "444b378f-bf1c-4878-86e7-ca27c77a7414"
     final NUMERIC_ID = "87"
-    final DEFAULT_ID = UUID
 
     def generatorMock = Mock(IdGenerator)
     def service = new BankAccountService(generatorMock)
@@ -18,20 +17,6 @@ class BankAccountServiceSpecification extends Specification {
 
         then:
         notThrown(IllegalArgumentException)
-    }
-
-    def "Should generate bank account with default id successfully"() {
-        given:
-        1 * generatorMock.generate() >> DEFAULT_ID
-
-        when:
-        service.generateBankAccount()
-
-        then:
-        def account = service.getBankAccount(DEFAULT_ID)
-
-        account instanceof BankAccount
-        account.id == DEFAULT_ID
     }
 
     def "Should generate bank account with UUID successfully"() {
